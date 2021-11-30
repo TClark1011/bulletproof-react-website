@@ -1,7 +1,9 @@
-import type { NextPage } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import REPO_DETAILS from '../config/repoDetails';
+import github from '../lib/github';
+import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
   return (
@@ -67,6 +69,15 @@ const Home: NextPage = () => {
       </footer>
     </div>
   )
+}
+
+export const getStaticProps:GetStaticProps<any> = async () => {
+  const commits = await github.repos.listCommits(REPO_DETAILS);
+  return {
+    props: {
+      commits
+    }
+  }
 }
 
 export default Home
