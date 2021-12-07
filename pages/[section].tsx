@@ -13,6 +13,7 @@ import trimFileExtension from '../utils/trimFileExtension';
 import findFileWithSectionName from '../utils/findFileWithSectionName';
 import { FileContents } from '../types/githubTypes';
 import composePropsGetterResult from '../utils/composePropsGetterResult';
+import Markdown from 'markdown-to-jsx';
 
 type SectionPageProps = {
   text: string;
@@ -20,7 +21,11 @@ type SectionPageProps = {
 
 export type SectionPagePathParams = { section: string };
 
-const SectionPage: NextPage<SectionPageProps> = ({ text }) => <div>{text}</div>;
+const SectionPage: NextPage<SectionPageProps> = ({ text }) => (
+  <div>
+    <Markdown>{text}</Markdown>
+  </div>
+);
 
 export default SectionPage;
 
