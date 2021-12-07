@@ -59,6 +59,22 @@ const AdjustedLink = ({ href, ...props }: LinkProps) => (
   <Link href={adjustLink(href || '')} color="blue.500" {...props} />
 );
 
+const Li = createMdBlock(ListItem, {
+  marginBottom: 0,
+  '& > p': {
+    marginBottom: 0,
+  },
+});
+
+const listStyles: CSSObject = {
+  '& ol, & ul': {
+    marginBottom: 0,
+  },
+};
+
+const Ul = createMdBlock(UnorderedList, listStyles);
+const Ol = createMdBlock(OrderedList, listStyles);
+
 const MarkdownParser = ({ text }: MarkdownParserProps) => (
   <Markdown
     className="md"
@@ -72,13 +88,13 @@ const MarkdownParser = ({ text }: MarkdownParserProps) => (
         h3: H2,
         h4: H2,
         a: AdjustedLink,
-        ul: createMdBlock(UnorderedList),
-        ol: createMdBlock(OrderedList),
-        li: ListItem,
+        ul: Ul,
+        ol: Ol,
+        li: Li,
       },
     }}
   >
-    {text.replace(/\\/g, '<br />')}
+    {text.replace(/\\/g, '\n')}
   </Markdown>
 );
 
