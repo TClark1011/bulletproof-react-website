@@ -8,8 +8,11 @@ import { Pipeline } from 'p-pipe';
 import { map, objOf, pipe, prop } from 'rambda';
 import { asyncPipe } from '../lib/asyncFp';
 import coerceIntoArray from '../utils/coerceIntoArray';
-import { fetchDocFolderItems } from '../utils/githubFetchers';
+import { fetchDocFolderItems, fetchFile } from '../utils/githubFetchers';
 import trimFileExtension from '../utils/trimFileExtension';
+import findFileWithSectionName from '../utils/findFileWithSectionName';
+import { FileContents } from '../types/githubTypes';
+import composePropsGetterResult from '../utils/composePropsGetterResult';
 
 type SectionPageProps = {
   text: string;
@@ -35,10 +38,11 @@ export const getStaticPaths: GetStaticPaths<SectionPagePathParams> = asyncPipe(
 export const getStaticProps: GetStaticProps<
   SectionPageProps,
   SectionPagePathParams
-> = async ({ params }) => {
-  return {
-    props: {
-      text: params?.section || 'ERROR',
-    },
-  };
-};
+> = async ({ params }) =>
+  (await asyncPipe(
+    fetchDocFolderItems,
+    findFileWithSectionName(params?.section || '____ERROR____'),
+    fetchFile,
+    objOf('text'),
+    composePropsGetterResult
+  )()) as any;
