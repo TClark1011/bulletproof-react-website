@@ -40,8 +40,18 @@ const H1 = createMdBlock('h1', {
   fontWeight: 'bold',
   marginBottom: 0,
 });
-
 const H2 = createMdBlock('h2', {
+  fontSize: '2xl',
+  marginBottom: 0,
+});
+
+const H3 = createMdBlock('h3', {
+  fontSize: 'xl',
+  fontWeight: 'bold',
+  marginBottom: 0,
+});
+
+const H4 = createMdBlock('h4', {
   fontSize: 'md',
   fontWeight: 'bold',
   marginBottom: 0,
@@ -85,8 +95,8 @@ const MarkdownParser = ({ text }: MarkdownParserProps) => (
         pre: PreFormatted,
         h1: H1,
         h2: H2,
-        h3: H2,
-        h4: H2,
+        h3: H3,
+        h4: H4,
         a: AdjustedLink,
         ul: Ul,
         ol: Ol,
