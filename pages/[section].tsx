@@ -14,7 +14,7 @@ import findFileWithSectionName from '../utils/findFileWithSectionName';
 import composePropsGetterResult from '../utils/composePropsGetterResult';
 import Markdown from 'markdown-to-jsx';
 import PageLayout from '../components/PageLayout';
-import * as MD from '../components/markdownOverrides';
+import MarkdownParser, * as MD from '../components/MarkdownParser';
 import { Code, Heading, Link } from '@chakra-ui/layout';
 import Head from 'next/head';
 import { startCase } from 'lodash';
@@ -32,23 +32,7 @@ const SectionPage: NextPage<SectionPageProps> = ({ text, title }) => (
       <title>{startCase(title)}</title>
     </Head>
     <PageLayout>
-      <Markdown
-        className="md"
-        options={{
-          overrides: {
-            code: Code,
-            p: MD.Paragraph,
-            pre: MD.PreFormatted,
-            h1: MD.H1,
-            h2: MD.H2,
-            h3: MD.H2,
-            h4: MD.H2,
-            a: MD.A,
-          },
-        }}
-      >
-        {text}
-      </Markdown>
+      <MarkdownParser text={text} />
     </PageLayout>
   </>
 );
