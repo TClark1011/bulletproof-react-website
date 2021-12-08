@@ -1,32 +1,25 @@
 import type { GetStaticProps, NextPage } from 'next';
-import { objOf } from 'rambda';
 import MarkdownParser from '../components/MarkdownParser';
 import PageLayout from '../components/PageLayout';
-import { asyncMap, asyncPipe } from '../lib/asyncFp';
-import composePropsGetterResult from '../utils/composePropsGetterResult';
+import PageContext from '../context/PageContext';
+import MarkdownPageProps from '../types/MarkdownPageProps';
 import {
-  fetchDocFolderItems,
-  fetchFile,
   fetchReadme,
+  fetchSubPages,
+  fetchMarkdownPageProps,
 } from '../utils/githubFetchers';
 
-export type HomeProps = {
-  data?: any;
-};
-
-const Home: NextPage<HomeProps> = ({ data = 'default' }) => {
-  console.log(data);
+const Home: NextPage<MarkdownPageProps> = (props) => {
   return (
-    <PageLayout>
-      <MarkdownParser text={data} />
-    </PageLayout>
+    <PageContext.Provider value={props}>
+      <PageLayout>
+        <MarkdownParser />
+      </PageLayout>
+    </PageContext.Provider>
   );
 };
 
-export const getStaticProps: GetStaticProps<HomeProps> = asyncPipe(
-  fetchReadme,
-  objOf('data'),
-  composePropsGetterResult
-);
+export const getStaticProps: GetStaticProps<MarkdownPageProps> = () =>
+  fetchMarkdownPageProps(fetchReadme);
 
 export default Home;
