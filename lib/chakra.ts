@@ -1,12 +1,15 @@
-import { extendTheme, theme as defaultTheme } from '@chakra-ui/react';
+import { extendTheme } from '@chakra-ui/react';
 
-export const theme = extendTheme(defaultTheme, {
-  styles: {
-    global: {
-      //   '.md pre > code:first-child:last-child': {
-      //     width: '100%',
-      //     padding: 4,
-      //   },
+export const theme = extendTheme({
+  layerStyles: {
+    topBarSpacer: {
+      width: 100,
     },
+    noFocusOutline: {
+      '--chakra-shadows-outline': 'none',
+    },
+  },
+  config: {
+    useSystemColorMode: true,
   },
 });

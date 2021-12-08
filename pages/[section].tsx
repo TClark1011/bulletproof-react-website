@@ -8,7 +8,11 @@ import { Pipeline } from 'p-pipe';
 import { map, objOf, pipe, prop } from 'rambda';
 import { asyncPipe } from '../lib/asyncFp';
 import coerceIntoArray from '../utils/coerceIntoArray';
-import { fetchDocFolderItems, fetchFile } from '../utils/githubFetchers';
+import {
+  fetchDocFolderItems,
+  fetchFile,
+  fetchSubPages,
+} from '../utils/githubFetchers';
 import trimFileExtension from '../utils/trimFileExtension';
 import findFileWithSectionName from '../utils/findFileWithSectionName';
 import composePropsGetterResult from '../utils/composePropsGetterResult';
@@ -18,23 +22,28 @@ import MarkdownParser, * as MD from '../components/MarkdownParser';
 import { Code, Heading, Link } from '@chakra-ui/layout';
 import Head from 'next/head';
 import { startCase } from 'lodash';
+import MarkdownPageProps from '../types/MarkdownPageProps';
+import {
+  fetchMarkdownPageProps,
+  fetchSubPageTextContent,
+} from '../utils/githubFetchers';
+import PageContext from '../context/PageContext';
 
-type SectionPageProps = {
-  text: string;
+type SectionPageProps = MarkdownPageProps & {
   title: string;
 };
 
 export type SectionPagePathParams = { section: string };
 
-const SectionPage: NextPage<SectionPageProps> = ({ text, title }) => (
-  <>
+const SectionPage: NextPage<SectionPageProps> = ({ title, ...props }) => (
+  <PageContext.Provider value={props}>
     <Head>
       <title>{startCase(title)}</title>
     </Head>
     <PageLayout>
-      <MarkdownParser text={text} />
+      <MarkdownParser />
     </PageLayout>
-  </>
+  </PageContext.Provider>
 );
 
 export default SectionPage;
@@ -54,14 +63,6 @@ export const getStaticProps: GetStaticProps<
   SectionPageProps,
   SectionPagePathParams
 > = async ({ params }) =>
-  (await asyncPipe(
-    fetchDocFolderItems,
-    findFileWithSectionName(params?.section || '____ERROR____'),
-    fetchFile,
-    (fileContents) => ({
-      props: {
-        text: fileContents,
-        title: params?.section || '____ERROR____',
-      },
-    })
-  )()) as any;
+  (await fetchMarkdownPageProps(
+    () => fetchSubPageTextContent(params?.section || 'ERROR') as any
+  )) as any;

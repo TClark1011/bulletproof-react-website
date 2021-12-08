@@ -12,6 +12,8 @@ import { chakra } from '@chakra-ui/system';
 import Markdown from 'markdown-to-jsx';
 import { adjust } from 'rambda';
 import adjustLink from '../utils/adjustLink';
+import { useColorModeValue } from '@chakra-ui/color-mode';
+import usePageProps from '../hooks/usePageProps';
 
 const createMdBlock = (
   component: Parameters<typeof chakra>[0],
@@ -37,8 +39,14 @@ const Paragraph = createMdBlock('p');
 
 const H1 = createMdBlock('h1', {
   fontSize: '4xl',
-  fontWeight: 'bold',
   marginBottom: 0,
+  // Layout for the Badges that appear underneath the title on the home page
+  '&#bulletproof-react-- + p': {
+    display: 'flex',
+    '& > a + a': {
+      marginLeft: 2,
+    },
+  },
 });
 const H2 = createMdBlock('h2', {
   fontSize: '2xl',
@@ -47,7 +55,6 @@ const H2 = createMdBlock('h2', {
 
 const H3 = createMdBlock('h3', {
   fontSize: 'xl',
-  fontWeight: 'bold',
   marginBottom: 0,
 });
 
@@ -57,17 +64,10 @@ const H4 = createMdBlock('h4', {
   marginBottom: 0,
 });
 
-const A = createMdBlock(Link, {
-  color: 'blue.500',
-});
-
-export type MarkdownParserProps = {
-  text: string;
+const AdjustedLink = ({ href, ...props }: LinkProps) => {
+  const color = useColorModeValue('blue.500', 'blue.300');
+  return <Link href={adjustLink(href || '')} color={color} {...props} />;
 };
-
-const AdjustedLink = ({ href, ...props }: LinkProps) => (
-  <Link href={adjustLink(href || '')} color="blue.500" {...props} />
-);
 
 const Li = createMdBlock(ListItem, {
   marginBottom: 0,
@@ -85,27 +85,30 @@ const listStyles: CSSObject = {
 const Ul = createMdBlock(UnorderedList, listStyles);
 const Ol = createMdBlock(OrderedList, listStyles);
 
-const MarkdownParser = ({ text }: MarkdownParserProps) => (
-  <Markdown
-    className="md"
-    options={{
-      overrides: {
-        code: Code,
-        p: Paragraph,
-        pre: PreFormatted,
-        h1: H1,
-        h2: H2,
-        h3: H3,
-        h4: H4,
-        a: AdjustedLink,
-        ul: Ul,
-        ol: Ol,
-        li: Li,
-      },
-    }}
-  >
-    {text.replace(/\\/g, '\n')}
-  </Markdown>
-);
+const MarkdownParser = () => {
+  const { text } = usePageProps();
+  return (
+    <Markdown
+      className="md"
+      options={{
+        overrides: {
+          code: Code,
+          p: Paragraph,
+          pre: PreFormatted,
+          h1: H1,
+          h2: H2,
+          h3: H3,
+          h4: H4,
+          a: AdjustedLink,
+          ul: Ul,
+          ol: Ol,
+          li: Li,
+        },
+      }}
+    >
+      {text.replace(/\\/g, '\n')}
+    </Markdown>
+  );
+};
 
 export default MarkdownParser;

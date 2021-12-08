@@ -8,10 +8,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^1.1.1",
     "@chakra-ui/react": "^1.7.2",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@octokit/rest": "^18.12.0",
+    "chakra-ui-ionicons": "^0.3.3",
     "framer-motion": "^4",
     "lodash": "^4.17.21",
     "markdown-to-jsx": "^7.1.5",

@@ -1,10 +1,11 @@
-import { complement, pipe, when } from 'rambda';
+import { identity, ifElse, pipe } from 'rambda';
 import removeFromString from './removeFromString';
 import trimFileExtension from './trimFileExtension';
 import urlIsAbsolute from './urlIsAbsolute';
 
-const adjustLink = when(
-  complement(urlIsAbsolute),
+const adjustLink = ifElse(
+  urlIsAbsolute,
+  identity,
   pipe(removeFromString('docs/'), trimFileExtension)
 );
 
