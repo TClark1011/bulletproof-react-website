@@ -1,8 +1,8 @@
-import { head, pipe, split } from 'rambda';
+import removeFromString from './removeFromString';
 
-const trimFileExtension: (p: string) => string = pipe<string, string[], string>(
-  split('.'),
-  head
-);
+const fileExtensionRegex = /(\.[A-z]{2,4})$/;
+
+const trimFileExtension: (p: string) => string =
+  removeFromString(fileExtensionRegex);
 
 export default trimFileExtension;

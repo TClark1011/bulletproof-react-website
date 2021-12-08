@@ -6,7 +6,7 @@ import urlIsAbsolute from './urlIsAbsolute';
 const adjustLink = ifElse(
   urlIsAbsolute,
   identity,
-  pipe(removeFromString('docs/'), trimFileExtension)
+  pipe(removeFromString('docs'), trimFileExtension)
 );
 
 export default adjustLink;
