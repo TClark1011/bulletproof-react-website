@@ -18,6 +18,8 @@ import usePageTitle from '../hooks/usePageTitle';
 import { useBreakpoint } from '@chakra-ui/media-query';
 import useClientIsMobile from '../hooks/useClientIsMobile';
 import usePageProps from '../hooks/usePageProps';
+import { TITLE } from '../config/constants';
+import Head from 'next/head';
 
 const contentBodyWidth = 600;
 
@@ -33,75 +35,80 @@ const PageLayout: FC = ({ children }) => {
   const clientIsMobile = useClientIsMobile();
 
   return (
-    <Flex direction="column">
-      <TopBar>
-        {!clientIsMobile && <Box layerStyle="topBarSpacer" />}
-        <Flex
-          flexGrow={1}
-          maxWidth={contentBodyWidth}
-          justify="space-between"
-          align="center"
-        >
-          {!clientIsMobile && (
-            <Button
-              as={Link}
-              variant="ghost"
-              href={'/'}
-              leftIcon={<HomeIcon />}
-            >
-              Home
-            </Button>
-          )}
-          <Menu>
-            <MenuButton
-              as={Button}
-              variant="outline"
-              rightIcon={<ChevronDownIcon />}
-            >
-              {currentPageTitle}
-            </MenuButton>
-            <MenuList shadow="xl">
-              <MenuItem
+    <>
+      <Head>
+        <title>{currentPageTitle}</title>
+      </Head>
+      <Flex direction="column">
+        <TopBar>
+          {!clientIsMobile && <Box layerStyle="topBarSpacer" />}
+          <Flex
+            flexGrow={1}
+            maxWidth={contentBodyWidth}
+            justify="space-between"
+            align="center"
+          >
+            {!clientIsMobile && (
+              <Button
                 as={Link}
-                href="/"
-                layerStyle="noFocusOutline"
-                disabled={currentPageTitle === 'Home'}
+                variant="ghost"
+                href={'/'}
+                leftIcon={<HomeIcon />}
               >
                 Home
-              </MenuItem>
-              <MenuDivider />
-              {subPages.map((page) => (
+              </Button>
+            )}
+            <Menu>
+              <MenuButton
+                as={Button}
+                variant="outline"
+                rightIcon={<ChevronDownIcon />}
+              >
+                {currentPageTitle}
+              </MenuButton>
+              <MenuList shadow="xl">
                 <MenuItem
-                  key={page}
                   as={Link}
+                  href="/"
                   layerStyle="noFocusOutline"
-                  href={`/${page}`}
-                  disabled={currentPageTitle === startCase(page)}
+                  disabled={currentPageTitle === TITLE}
                 >
-                  {startCase(page)}
+                  Home
                 </MenuItem>
-              ))}
-            </MenuList>
-          </Menu>
-        </Flex>
-        <HStack layerStyle="topBarSpacer">
-          <NavBarIconButton
-            icon={<ColorModeIcon />}
-            aria-label="Toggle Color Mode"
-            onClick={toggleColorMode}
-          />
-          <NavBarIconButton
-            icon={<LogoGithubIcon />}
-            href={originalRepositoryUrl}
-            aria-label="GitHub repository"
-            as={Link}
-          />
-        </HStack>
-      </TopBar>
-      <Center flexGrow={1} boxSize="100%" paddingX={4}>
-        <Box maxWidth={contentBodyWidth}>{children}</Box>
-      </Center>
-    </Flex>
+                <MenuDivider />
+                {subPages.map((page) => (
+                  <MenuItem
+                    key={page}
+                    as={Link}
+                    layerStyle="noFocusOutline"
+                    href={`/${page}`}
+                    disabled={currentPageTitle === startCase(page)}
+                  >
+                    {startCase(page)}
+                  </MenuItem>
+                ))}
+              </MenuList>
+            </Menu>
+          </Flex>
+          <HStack layerStyle="topBarSpacer">
+            <NavBarIconButton
+              icon={<ColorModeIcon />}
+              aria-label="Toggle Color Mode"
+              onClick={toggleColorMode}
+            />
+            <NavBarIconButton
+              icon={<LogoGithubIcon />}
+              href={originalRepositoryUrl}
+              aria-label="GitHub repository"
+              as={Link}
+            />
+          </HStack>
+        </TopBar>
+        <Center flexGrow={1} boxSize="100%" paddingX={4}>
+          <Box maxWidth={contentBodyWidth}>{children}</Box>
+        </Center>
+      </Flex>
+    </>
   );
 };
 
