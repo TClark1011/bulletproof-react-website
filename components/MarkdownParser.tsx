@@ -10,10 +10,11 @@ import {
 import { CSSObject } from '@chakra-ui/styled-system';
 import { chakra } from '@chakra-ui/system';
 import Markdown from 'markdown-to-jsx';
-import { adjust } from 'rambda';
-import adjustLink from '../utils/adjustLink';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import usePageProps from '../hooks/usePageProps';
+import useIsOnHomepage from '../hooks/useIsOnHomePage';
+import { identity, pipe } from 'rambda';
+import useLinkFix from '../hooks/useLinkFix';
 
 const createMdBlock = (
   component: Parameters<typeof chakra>[0],
@@ -66,7 +67,8 @@ const H4 = createMdBlock('h4', {
 
 const AdjustedLink = ({ href, ...props }: LinkProps) => {
   const color = useColorModeValue('blue.500', 'blue.300');
-  return <Link href={adjustLink(href || '')} color={color} {...props} />;
+  const fixedLink = useLinkFix(href || '');
+  return <Link href={fixedLink} color={color} {...props} />;
 };
 
 const Li = createMdBlock(ListItem, {
