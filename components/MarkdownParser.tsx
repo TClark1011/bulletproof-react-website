@@ -2,10 +2,10 @@ import {
   Code,
   Link,
   LinkProps,
-  List,
   ListItem,
   OrderedList,
   UnorderedList,
+  CodeProps,
 } from '@chakra-ui/layout';
 import { CSSObject } from '@chakra-ui/styled-system';
 import { chakra } from '@chakra-ui/system';
@@ -15,6 +15,7 @@ import usePageProps from '../hooks/usePageProps';
 import useIsOnHomepage from '../hooks/useIsOnHomePage';
 import { identity, pipe } from 'rambda';
 import useLinkFix from '../hooks/useLinkFix';
+import fixMarkdownLineBreaks from '../utils/fixMarkdownLineBreaks';
 
 const createMdBlock = (
   component: Parameters<typeof chakra>[0],
@@ -29,11 +30,6 @@ const createMdBlock = (
 
 const PreFormatted = createMdBlock('pre', {
   whiteSpace: 'pre-wrap',
-  // Style code blocks
-  '& > code:first-child:last-child': {
-    width: '100%',
-    padding: 4,
-  },
 });
 
 const Paragraph = createMdBlock('p');
@@ -87,6 +83,24 @@ const listStyles: CSSObject = {
 const Ul = createMdBlock(UnorderedList, listStyles);
 const Ol = createMdBlock(OrderedList, listStyles);
 
+const CodeSnippet = ({
+  children,
+  ...props
+}: CodeProps & { children: string }) => {
+  const bgColor = useColorModeValue('gray.100', 'gray.700');
+  const isBlock = children.length > 30;
+  return (
+    <Code
+      background={bgColor}
+      width={isBlock ? '100%' : 'auto'}
+      {...(isBlock && { padding: 2 })}
+      {...props}
+    >
+      {children}
+    </Code>
+  );
+};
+
 const MarkdownParser = () => {
   const { text } = usePageProps();
   return (
@@ -94,7 +108,7 @@ const MarkdownParser = () => {
       className="md"
       options={{
         overrides: {
-          code: Code,
+          code: CodeSnippet,
           p: Paragraph,
           pre: PreFormatted,
           h1: H1,
@@ -108,7 +122,7 @@ const MarkdownParser = () => {
         },
       }}
     >
-      {text.replace(/\\/g, '\n')}
+      {fixMarkdownLineBreaks(text)}
     </Markdown>
   );
 };
