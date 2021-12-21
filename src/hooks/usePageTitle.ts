@@ -1,9 +1,8 @@
 import { startCase } from 'lodash';
 import { useRouter } from 'next/router';
 import { pipe, prop } from 'rambda';
-import { TITLE } from '../config/constants';
-import fallback from '../utils/fallback';
-import removeFromString from '../utils/removeFromString';
+import { TITLE } from '../config';
+import {fallback, removeFromString} from '../utils';
 
 const usePageTitle = pipe(
   useRouter,

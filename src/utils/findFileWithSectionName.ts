@@ -1,4 +1,4 @@
-import { FileContents } from '../types/githubTypes';
+import { FileContents } from '../types';
 import { equals, pipe, prop } from 'rambda';
 import trimFileExtension from './trimFileExtension';
 

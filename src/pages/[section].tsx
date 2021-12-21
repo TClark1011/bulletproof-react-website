@@ -7,20 +7,18 @@ import {
 import { Pipeline } from 'p-pipe';
 import { map, objOf, pipe, prop } from 'rambda';
 import { asyncPipe } from '../lib/asyncFp';
-import coerceIntoArray from '../utils/coerceIntoArray';
-import { fetchDocFolderItems } from '../utils/githubFetchers';
-import trimFileExtension from '../utils/trimFileExtension';
-import PageLayout from '../components/PageLayout';
+import { coerceIntoArray, trimFileExtension } from '../utils';
+import { PageLayout } from '../components';
 import { MarkdownParser } from '../features/markdownParsing';
-import { Code, Heading, Link } from '@chakra-ui/layout';
 import Head from 'next/head';
 import { startCase } from 'lodash';
-import MarkdownPageProps from '../types/MarkdownPageProps';
+import { MarkdownPageProps } from '../types';
 import {
   fetchMarkdownPageProps,
   fetchSubPageTextContent,
+  fetchDocFolderItems,
 } from '../utils/githubFetchers';
-import PageContext from '../context/PageContext';
+import { PageContext } from '../context';
 
 type SectionPageProps = MarkdownPageProps & {
   title: string;

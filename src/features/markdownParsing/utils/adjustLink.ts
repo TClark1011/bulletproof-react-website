@@ -5,11 +5,8 @@ import {
   ifElse,
   includes,
   pipe,
-  replace,
 } from 'rambda';
-import removeFromString from '../../../utils/removeFromString';
-import trimFileExtension from '../../../utils/trimFileExtension';
-import urlIsAbsolute from '../../../utils/urlIsAbsolute';
+import {removeFromString, trimFileExtension, urlIsAbsolute} from '../../../utils';
 
 const adjustLink = ifElse(
   allPass([complement(urlIsAbsolute), includes('docs')]),

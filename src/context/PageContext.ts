@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import MarkdownPageProps from '../types/MarkdownPageProps';
+import {MarkdownPageProps} from '../types';
 
 const PageContext = createContext<MarkdownPageProps>({
   originalRepositoryUrl: '',

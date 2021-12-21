@@ -1,5 +1,5 @@
 import { Button, IconButton } from '@chakra-ui/button';
-import { ChevronDownIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Box, Center, Flex, HStack, Link } from '@chakra-ui/layout';
 import {
   Menu,
@@ -12,11 +12,8 @@ import { HomeIcon, LogoGithubIcon } from 'chakra-ui-ionicons';
 import { startCase } from 'lodash';
 import { FC } from 'react';
 import TopBar from './TopBar';
-import { useColorModeValue } from '@chakra-ui/color-mode';
-import usePageTitle from '../hooks/usePageTitle';
-import useClientIsMobile from '../hooks/useClientIsMobile';
-import usePageProps from '../hooks/usePageProps';
-import { TITLE } from '../config/constants';
+import { usePageTitle, useClientIsMobile, usePageProps } from '../hooks';
+import { TITLE } from '../config';
 import Head from 'next/head';
 
 const contentBodyWidth = 600;

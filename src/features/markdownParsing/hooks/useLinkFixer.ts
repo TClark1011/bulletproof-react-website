@@ -1,15 +1,14 @@
 import { pipe, replace } from 'rambda';
-import adjustLink from '../utils/adjustLink';
-import updateWhen from '../../../utils/updateWhen';
-import useIsOnHomepage from '../../../hooks/useIsOnHomePage';
-import usePageProps from '../../../hooks/usePageProps';
+import {adjustLink} from '../utils';
+import {updateWhen} from '../../../utils';
+import {  usePageProps, useIsOnHomePage } from '../../../hooks';
 
 const pathBackStepRegex = /^(\.\.\/)/;
 const convertDocsRelativePathToRoot = (ogUrl: string) =>
   replace(pathBackStepRegex, `${ogUrl}/tree/master/`);
 
 const useLinkFixer = (): ((p:string) => string) => {
-  const isOnHomePage = useIsOnHomepage();
+  const isOnHomePage = useIsOnHomePage();
   const { originalRepositoryUrl } = usePageProps();
   return pipe(
     adjustLink,

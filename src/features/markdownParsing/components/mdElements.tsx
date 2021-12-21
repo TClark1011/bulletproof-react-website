@@ -9,10 +9,9 @@ import {
 } from '@chakra-ui/layout';
 import { CSSObject } from '@chakra-ui/styled-system';
 import { chakra } from '@chakra-ui/system';
-import useLinkFixer from '../hooks/useLinkFixer';
-import getCodeLangFromClassName from '../utils/getCodeLangFromClassName';
-import SyntaxHighlighter from '../lib/SyntaxHighlighter';
-import { manuallyCheckForJs } from '../utils/manuallyCheckForJs';
+import { useLinkFixer } from '../hooks';
+import { SyntaxHighlighter } from '../lib';
+import { manuallyCheckForJs, getCodeLangFromClassName } from '../utils';
 
 const CODE_BG = 'rgb(46, 52, 64)';
 

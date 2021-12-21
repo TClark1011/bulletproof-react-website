@@ -1,7 +1,7 @@
 import { useBreakpoint } from '@chakra-ui/media-query';
 import { flip, includes, pipe } from 'rambda';
-import Function from '../types/Function';
-import fallback from '../utils/fallback';
+import {Function} from '../types';
+import {fallback} from '../utils';
 
 const useClientIsMobile = pipe(
   useBreakpoint,

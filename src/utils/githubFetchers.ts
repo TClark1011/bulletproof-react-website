@@ -1,10 +1,8 @@
 import { map, prop } from 'rambda';
-import REPO_DETAILS, { README_DOWNLOAD } from '../config/repoDetails';
+import {REPO_DETAILS, README_DOWNLOAD } from '../config';
 import { asyncPipe } from '../lib/asyncFp';
 import github from '../lib/github';
-import Function from '../types/Function';
-import { FileContents } from '../types/githubTypes';
-import MarkdownPageProps from '../types/MarkdownPageProps';
+import { FileContents, MarkdownPageProps } from '../types';
 import findFileWithSectionName from './findFileWithSectionName';
 import give from './give';
 import { getResponseText } from './responseHelpers';
