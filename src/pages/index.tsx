@@ -1,5 +1,5 @@
 import type { GetStaticProps, NextPage } from 'next';
-import MarkdownParser from '../features/markdownParsing/components/MarkdownParser';
+import { MarkdownParser } from '../features/markdownParsing';
 import PageLayout from '../components/PageLayout';
 import PageContext from '../context/PageContext';
 import MarkdownPageProps from '../types/MarkdownPageProps';

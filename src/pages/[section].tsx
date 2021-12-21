@@ -11,7 +11,7 @@ import coerceIntoArray from '../utils/coerceIntoArray';
 import { fetchDocFolderItems } from '../utils/githubFetchers';
 import trimFileExtension from '../utils/trimFileExtension';
 import PageLayout from '../components/PageLayout';
-import MarkdownParser from '../features/markdownParsing/components/MarkdownParser';
+import { MarkdownParser } from '../features/markdownParsing';
 import { Code, Heading, Link } from '@chakra-ui/layout';
 import Head from 'next/head';
 import { startCase } from 'lodash';
