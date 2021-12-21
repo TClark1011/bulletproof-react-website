@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/layout';
 import { CSSObject } from '@chakra-ui/styled-system';
 import { chakra } from '@chakra-ui/system';
+import { GlobalStyle } from '@chakra-ui/react';
 import Markdown from 'markdown-to-jsx';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import usePageProps from '../hooks/usePageProps';

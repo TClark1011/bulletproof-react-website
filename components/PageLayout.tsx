@@ -12,10 +12,8 @@ import { HomeIcon, LogoGithubIcon } from 'chakra-ui-ionicons';
 import { startCase } from 'lodash';
 import { FC } from 'react';
 import TopBar from './TopBar';
-import { REPO_LINK } from '../config/env';
-import { useColorMode, useColorModeValue } from '@chakra-ui/color-mode';
+import { useColorModeValue } from '@chakra-ui/color-mode';
 import usePageTitle from '../hooks/usePageTitle';
-import { useBreakpoint } from '@chakra-ui/media-query';
 import useClientIsMobile from '../hooks/useClientIsMobile';
 import usePageProps from '../hooks/usePageProps';
 import { TITLE } from '../config/constants';
@@ -29,8 +27,6 @@ const NavBarIconButton: typeof IconButton = (props) => (
 
 const PageLayout: FC = ({ children }) => {
   const { subPages, originalRepositoryUrl } = usePageProps();
-  const ColorModeIcon = useColorModeValue(SunIcon, MoonIcon);
-  const { toggleColorMode } = useColorMode();
   const currentPageTitle = usePageTitle();
   const clientIsMobile = useClientIsMobile();
 
@@ -91,11 +87,6 @@ const PageLayout: FC = ({ children }) => {
             </Menu>
           </Flex>
           <HStack layerStyle="topBarSpacer">
-            <NavBarIconButton
-              icon={<ColorModeIcon />}
-              aria-label="Toggle Color Mode"
-              onClick={toggleColorMode}
-            />
             <NavBarIconButton
               icon={<LogoGithubIcon />}
               href={originalRepositoryUrl}
