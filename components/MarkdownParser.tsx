@@ -9,13 +9,22 @@ import {
 } from '@chakra-ui/layout';
 import { CSSObject } from '@chakra-ui/styled-system';
 import { chakra } from '@chakra-ui/system';
+import { GlobalStyle } from '@chakra-ui/react';
 import Markdown from 'markdown-to-jsx';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import usePageProps from '../hooks/usePageProps';
 import useIsOnHomepage from '../hooks/useIsOnHomePage';
-import { identity, pipe } from 'rambda';
+import { identity, pipe, test } from 'rambda';
 import useLinkFix from '../hooks/useLinkFix';
 import fixMarkdownLineBreaks from '../utils/fixMarkdownLineBreaks';
+import getCodeLangFromClassName from '../utils/getCodeLangFromClassName';
+import { Prism } from 'react-syntax-highlighter';
+import { theme } from '../lib/chakra';
+import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import SyntaxHighlighter from '../lib/SyntaxHighlighter';
+
+const manuallyCheckForJs = (code: string) =>
+  [/import \{/g, /(const|let|var) [\w\d]+ =/g].some((item) => item.test(code));
 
 const createMdBlock = (
   component: Parameters<typeof chakra>[0],
@@ -85,16 +94,24 @@ const Ol = createMdBlock(OrderedList, listStyles);
 
 const CodeSnippet = ({
   children,
+  className,
   ...props
 }: CodeProps & { children: string }) => {
-  const bgColor = useColorModeValue('gray.100', 'gray.700');
-  const isBlock = children.length > 30;
-  return (
+  const bgColor = useColorModeValue('rgb(245, 242, 240)', 'rgb(46, 52, 64)');
+  const lang =
+    getCodeLangFromClassName(className || '') ||
+    (manuallyCheckForJs(children) && 'js');
+  const isLong = children.length > 100;
+  return lang ? (
+    <SyntaxHighlighter language={lang} data-lang={lang}>
+      {children}
+    </SyntaxHighlighter>
+  ) : (
     <Code
       background={bgColor}
-      width={isBlock ? '100%' : 'auto'}
-      {...(isBlock && { padding: 2 })}
       {...props}
+      style={isLong ? { width: '100%' } : {}}
+      {...(isLong && { padding: 2 })}
     >
       {children}
     </Code>

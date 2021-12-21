@@ -1,6 +1,15 @@
 import { extendTheme } from '@chakra-ui/react';
 
 export const theme = extendTheme({
+  styles: {
+    global: {
+      '.md': {
+        'pre[data-lang] > pre[data-lang]': {
+          padding: '0 !important'
+        }
+      }
+    }
+  },
   layerStyles: {
     topBarSpacer: {
       width: 100,
@@ -10,6 +19,6 @@ export const theme = extendTheme({
     },
   },
   config: {
-    useSystemColorMode: true,
+    initialColorMode: 'dark',
   },
 });
