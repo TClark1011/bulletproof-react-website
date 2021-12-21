@@ -9,11 +9,12 @@ import {
 } from '@chakra-ui/layout';
 import { CSSObject } from '@chakra-ui/styled-system';
 import { chakra } from '@chakra-ui/system';
-import { useColorModeValue } from '@chakra-ui/color-mode';
 import useLinkFixer from '../hooks/useLinkFixer';
 import getCodeLangFromClassName from '../utils/getCodeLangFromClassName';
 import SyntaxHighlighter from '../lib/SyntaxHighlighter';
 import { manuallyCheckForJs } from '../utils/manuallyCheckForJs';
+
+const CODE_BG = 'rgb(46, 52, 64)';
 
 const createMdBlock = (
   component: Parameters<typeof chakra>[0],
@@ -54,9 +55,8 @@ export const H4 = createMdBlock('h4', {
   marginBottom: 0,
 });
 export const AdjustedLink = ({ href, ...props }: LinkProps) => {
-  const color = useColorModeValue('blue.500', 'blue.300');
   const linkFixer = useLinkFixer();
-  return <Link href={linkFixer(href || '')} color={color} {...props} />;
+  return <Link href={linkFixer(href || '')} color="blue.300" {...props} />;
 };
 export const Li = createMdBlock(ListItem, {
   marginBottom: 0,
@@ -76,7 +76,6 @@ export const CodeSnippet = ({
   className,
   ...props
 }: CodeProps & { children: string }) => {
-  const bgColor = useColorModeValue('rgb(245, 242, 240)', 'rgb(46, 52, 64)');
   const lang =
     getCodeLangFromClassName(className || '') ||
     (manuallyCheckForJs(children) && 'js');
@@ -87,7 +86,7 @@ export const CodeSnippet = ({
     </SyntaxHighlighter>
   ) : (
     <Code
-      background={bgColor}
+      background={CODE_BG}
       {...props}
       style={isLong ? { width: '100%' } : {}}
       {...(isLong && { padding: 2 })}
