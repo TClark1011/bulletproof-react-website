@@ -1,7 +1,7 @@
 import { pipe, replace } from 'rambda';
-import {adjustLink} from '../utils';
-import {updateWhen} from '../../../utils';
-import {  usePageProps, useIsOnHomePage } from '../../../hooks';
+import {adjustLink} from '@/features/markdownParsing/utils';
+import {updateWhen} from '@/utils';
+import {  usePageProps, useIsOnHomePage } from '@/hooks';
 
 const pathBackStepRegex = /^(\.\.\/)/;
 const convertDocsRelativePathToRoot = (ogUrl: string) =>

@@ -6,7 +6,7 @@ import {
   includes,
   pipe,
 } from 'rambda';
-import {removeFromString, trimFileExtension, urlIsAbsolute} from '../../../utils';
+import {removeFromString, trimFileExtension, urlIsAbsolute} from '@/utils';
 
 const adjustLink = ifElse(
   allPass([complement(urlIsAbsolute), includes('docs')]),

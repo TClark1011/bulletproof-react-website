@@ -13,8 +13,8 @@ import { startCase } from 'lodash';
 import { FC } from 'react';
 import TopBar from './TopBar';
 import { usePageTitle, useClientIsMobile, usePageProps } from '../hooks';
-import { TITLE } from '../config';
 import Head from 'next/head';
+import { TITLE } from '@/config';
 
 const contentBodyWidth = 600;
 

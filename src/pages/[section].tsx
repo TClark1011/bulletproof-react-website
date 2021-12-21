@@ -7,7 +7,7 @@ import {
 import { Pipeline } from 'p-pipe';
 import { map, objOf, pipe, prop } from 'rambda';
 import { asyncPipe } from '../lib/asyncFp';
-import { coerceIntoArray, trimFileExtension } from '../utils';
+import { coerceIntoArray, trimFileExtension } from '@/utils';
 import { PageLayout } from '../components';
 import { MarkdownParser } from '../features/markdownParsing';
 import Head from 'next/head';

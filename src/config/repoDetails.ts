@@ -1,4 +1,4 @@
-import { BaseRepoParameters } from '../lib/github';
+import { BaseRepoParameters } from '@/lib/github';
 
 const REPO_DETAILS: BaseRepoParameters = {
   owner: 'alan2207',

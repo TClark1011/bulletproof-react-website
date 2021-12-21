@@ -1,6 +1,6 @@
 import Markdown from 'markdown-to-jsx';
-import { usePageProps } from '../../../hooks';
-import { fixMarkdownLineBreaks } from '../utils';
+import { usePageProps } from '@/hooks';
+import { fixMarkdownLineBreaks } from '@/features/markdownParsing/utils';
 import {
   CodeSnippet,
   Paragraph,
