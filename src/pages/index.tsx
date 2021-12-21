@@ -1,13 +1,9 @@
 import type { GetStaticProps, NextPage } from 'next';
-import { MarkdownParser } from '../features/markdownParsing';
-import PageLayout from '../components/PageLayout';
-import PageContext from '../context/PageContext';
-import MarkdownPageProps from '../types/MarkdownPageProps';
-import {
-  fetchReadme,
-  fetchSubPages,
-  fetchMarkdownPageProps,
-} from '../utils/githubFetchers';
+import { MarkdownParser } from '@/features/markdownParsing';
+import { PageLayout } from '@/components';
+import { PageContext } from '@/context';
+import { MarkdownPageProps } from '@/types';
+import { fetchReadme, fetchMarkdownPageProps } from '@/api';
 
 const Home: NextPage<MarkdownPageProps> = (props) => {
   return (

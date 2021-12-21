@@ -3,10 +3,7 @@ import {REPO_DETAILS, README_DOWNLOAD } from '@/config';
 import { asyncPipe } from '@/lib/asyncFp';
 import github from '@/lib/github';
 import { FileContents, MarkdownPageProps } from '@/types';
-import findFileWithSectionName from './findFileWithSectionName';
-import give from './give';
-import { getResponseText } from './responseHelpers';
-import trimFileExtension from './trimFileExtension';
+import { getResponseText, trimFileExtension, give, findFileWithSectionName  } from '@/utils';
 
 export const fetchDocFolderItems = asyncPipe(
   give(github.repos.getContent({ ...REPO_DETAILS, path: '/docs' })),

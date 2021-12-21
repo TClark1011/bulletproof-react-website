@@ -4,15 +4,6 @@ export { default as composePropsGetterResult } from "./composePropsGetterResult"
 export { default as fallback } from "./fallback";
 export { default as findFileWithSectionName } from "./findFileWithSectionName";
 export { default as flipCurry } from "./flipCurry";
-export {
-	fetchDocFolderItems,
-	fetchFile,
-	fetchReadme,
-	fetchSubPages,
-	fetchRepoUrl,
-	fetchSubPageTextContent,
-	fetchMarkdownPageProps
-} from "./githubFetchers";
 export { default as give } from "./give";
 export { default as removeFromString } from "./removeFromString";
 export { getResponseJson, getResponseText } from "./responseHelpers";
