@@ -12,7 +12,7 @@ import {
   identity,
   equals,
 } from 'rambda';
-import give from './give';
+import give from '../../../utils/give';
 
 const codeClassNameLangRegex = /(?:lang-)([a-z]+)/g;
 

@@ -9,22 +9,11 @@ import {
 } from '@chakra-ui/layout';
 import { CSSObject } from '@chakra-ui/styled-system';
 import { chakra } from '@chakra-ui/system';
-import { GlobalStyle } from '@chakra-ui/react';
-import Markdown from 'markdown-to-jsx';
 import { useColorModeValue } from '@chakra-ui/color-mode';
-import usePageProps from '../hooks/usePageProps';
-import useIsOnHomepage from '../hooks/useIsOnHomePage';
-import { identity, pipe, test } from 'rambda';
-import useLinkFix from '../hooks/useLinkFix';
-import fixMarkdownLineBreaks from '../utils/fixMarkdownLineBreaks';
+import useLinkFixer from '../hooks/useLinkFixer';
 import getCodeLangFromClassName from '../utils/getCodeLangFromClassName';
-import { Prism } from 'react-syntax-highlighter';
-import { theme } from '../lib/chakra';
-import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import SyntaxHighlighter from '../lib/SyntaxHighlighter';
-
-const manuallyCheckForJs = (code: string) =>
-  [/import \{/g, /(const|let|var) [\w\d]+ =/g].some((item) => item.test(code));
+import { manuallyCheckForJs } from '../utils/manuallyCheckForJs';
 
 const createMdBlock = (
   component: Parameters<typeof chakra>[0],
@@ -36,14 +25,11 @@ const createMdBlock = (
       ...styles,
     },
   });
-
-const PreFormatted = createMdBlock('pre', {
+export const PreFormatted = createMdBlock('pre', {
   whiteSpace: 'pre-wrap',
 });
-
-const Paragraph = createMdBlock('p');
-
-const H1 = createMdBlock('h1', {
+export const Paragraph = createMdBlock('p');
+export const H1 = createMdBlock('h1', {
   fontSize: '4xl',
   marginBottom: 0,
   // Layout for the Badges that appear underneath the title on the home page
@@ -54,45 +40,38 @@ const H1 = createMdBlock('h1', {
     },
   },
 });
-const H2 = createMdBlock('h2', {
+export const H2 = createMdBlock('h2', {
   fontSize: '2xl',
   marginBottom: 0,
 });
-
-const H3 = createMdBlock('h3', {
+export const H3 = createMdBlock('h3', {
   fontSize: 'xl',
   marginBottom: 0,
 });
-
-const H4 = createMdBlock('h4', {
+export const H4 = createMdBlock('h4', {
   fontSize: 'md',
   fontWeight: 'bold',
   marginBottom: 0,
 });
-
-const AdjustedLink = ({ href, ...props }: LinkProps) => {
+export const AdjustedLink = ({ href, ...props }: LinkProps) => {
   const color = useColorModeValue('blue.500', 'blue.300');
-  const fixedLink = useLinkFix(href || '');
-  return <Link href={fixedLink} color={color} {...props} />;
+  const linkFixer = useLinkFixer();
+  return <Link href={linkFixer(href || '')} color={color} {...props} />;
 };
-
-const Li = createMdBlock(ListItem, {
+export const Li = createMdBlock(ListItem, {
   marginBottom: 0,
   '& > p': {
     marginBottom: 0,
   },
 });
-
 const listStyles: CSSObject = {
   '& ol, & ul': {
     marginBottom: 0,
   },
 };
-
-const Ul = createMdBlock(UnorderedList, listStyles);
-const Ol = createMdBlock(OrderedList, listStyles);
-
-const CodeSnippet = ({
+export const Ul = createMdBlock(UnorderedList, listStyles);
+export const Ol = createMdBlock(OrderedList, listStyles);
+export const CodeSnippet = ({
   children,
   className,
   ...props
@@ -117,31 +96,3 @@ const CodeSnippet = ({
     </Code>
   );
 };
-
-const MarkdownParser = () => {
-  const { text } = usePageProps();
-  return (
-    <Markdown
-      className="md"
-      options={{
-        overrides: {
-          code: CodeSnippet,
-          p: Paragraph,
-          pre: PreFormatted,
-          h1: H1,
-          h2: H2,
-          h3: H3,
-          h4: H4,
-          a: AdjustedLink,
-          ul: Ul,
-          ol: Ol,
-          li: Li,
-        },
-      }}
-    >
-      {fixMarkdownLineBreaks(text)}
-    </Markdown>
-  );
-};
-
-export default MarkdownParser;

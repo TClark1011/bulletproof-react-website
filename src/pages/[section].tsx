@@ -8,17 +8,10 @@ import { Pipeline } from 'p-pipe';
 import { map, objOf, pipe, prop } from 'rambda';
 import { asyncPipe } from '../lib/asyncFp';
 import coerceIntoArray from '../utils/coerceIntoArray';
-import {
-  fetchDocFolderItems,
-  fetchFile,
-  fetchSubPages,
-} from '../utils/githubFetchers';
+import { fetchDocFolderItems } from '../utils/githubFetchers';
 import trimFileExtension from '../utils/trimFileExtension';
-import findFileWithSectionName from '../utils/findFileWithSectionName';
-import composePropsGetterResult from '../utils/composePropsGetterResult';
-import Markdown from 'markdown-to-jsx';
 import PageLayout from '../components/PageLayout';
-import MarkdownParser, * as MD from '../components/MarkdownParser';
+import MarkdownParser from '../features/markdownParsing/components/MarkdownParser';
 import { Code, Heading, Link } from '@chakra-ui/layout';
 import Head from 'next/head';
 import { startCase } from 'lodash';
